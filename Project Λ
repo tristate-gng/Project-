@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T-1000 Marketing: Liquid Metal Branding</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            font-family: 'Orbitron', sans-serif;
+            background-color: #000;
+            color: #fff;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        #lava-lamp {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            background: linear-gradient(90deg, #1a1a1a, #4a4a4a);
+            padding: 20px 0;
+            box-shadow: 0 0 20px rgba(0, 195, 255, 0.5);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: 2px solid #00c3ff;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(45deg, #1a1a1a, #4a4a4a);
+        }
+
+        nav ul li a:before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: #00c3ff;
+            z-index: -1;
+            filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        nav ul li a:hover:before {
+            opacity: 1;
+        }
+
+        nav ul li a:hover {
+            color: #00c3ff;
+            box-shadow: 0 0 10px #00c3ff, 0 0 20px #00c3ff, 0 0 30px #00c3ff;
+            text-shadow: 0 0 5px #00c3ff;
+        }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 80px);
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .hero-content {
+            background: rgba(26, 26, 26, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 195, 255, 0.3);
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00c3ff;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #1a1a1a, #4a4a4a);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid #00c3ff;
+            position: relative;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .cta-button:before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: #00c3ff;
+            z-index: -1;
+            filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .cta-button:hover:before {
+            opacity: 1;
+        }
+
+        .cta-button:hover {
+            color: #00c3ff;
+            box-shadow: 0 0 10px #00c3ff, 0 0 20px #00c3ff, 0 0 30px #00c3ff;
+            transform: translateY(-3px) scale(1.05);
+            text-shadow: 0 0 5px #00c3ff;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="lava-lamp"></canvas>
+    <div class="content">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#product">Product</a></li>
+                    <li><a href="#idea">Idea</a></li>
+                    <li><a href="#inspiration">Inspiration</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="hero">
+            <div class="hero-content">
+                <h1>T-1000 Marketing: Liquid Metal Branding</h1>
+                <p>Shape the future of your brand with our morphing strategies</p>
+                <a href="#contact" class="cta-button">Initiate Contact</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Three.js Lava Lamp Effect
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('lava-lamp'), alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        const geometry = new THREE.SphereGeometry(1, 32, 32);
+        const material = new THREE.MeshBasicMaterial({ color: 0x00c3ff });
+        const blobs = [];
+
+        for (let i = 0; i < 5; i++) {
+            const blob = new THREE.Mesh(geometry, material);
+            blob.position.set(
+                Math.random() * 4 - 2,
+                Math.random() * 4 - 2,
+                Math.random() * 4 - 2
+            );
+            blob.scale.setScalar(Math.random() * 0.5 + 0.5);
+            scene.add(blob);
+            blobs.push(blob);
+        }
+
+        camera.position.z = 5;
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            blobs.forEach(blob => {
+                blob.position.y += Math.sin(Date.now() * 0.001 + blob.position.x) * 0.01;
+                blob.scale.setScalar(Math.sin(Date.now() * 0.001 + blob.position.z) * 0.2 + 0.8);
+            });
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Liquid metal effect on hover
+        const buttons = document.querySelectorAll('nav a, .cta-button');
+        buttons.forEach(button => {
+            button.addEventListener('mousemove', (e) => {
+                const rect = button.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                button.style.background = `
+                    radial-gradient(circle at ${x}px ${y}px, #4a4a4a, #1a1a1a)
+                `;
+            });
+            button.addEventListener('mouseleave', () => {
+                button.style.background = 'linear-gradient(45deg, #1a1a1a, #4a4a4a)';
+            });
+        });
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
